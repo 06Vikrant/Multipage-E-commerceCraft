@@ -90,7 +90,7 @@ const SignIn = () => {
                 </form>
                 <p className="flex flex-wrap account-rel-text">
                   Don&apos;t have a account?
-                  <Link to='/sing_up'>
+                  <Link to='/sign_up'>
                       Sign Up  
                   </Link>
                 </p>
