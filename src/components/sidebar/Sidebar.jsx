@@ -1,9 +1,136 @@
-const Sidebar = () => {
-  return (
-    <div>
-        Sidebar
-    </div>
-  )
-}
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { styled } from "styled-components";
+import { sideMenuData } from "../../data/data";
+import { selectIsSidebarOpen, toggleSidebar } from "../../redux/slices/sidebarSlice";
+import { SiteBrandWrapper } from "../../styles/header";
+import { breakpoints, defaultTheme } from "../../styles/themes/default";
+import { Input, InputGroupWrapper } from "../../styles/themes/form";
+import { staticImages } from "../../utils/imgaes";
 
-export default Sidebar
+const SideNaviagationWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  z-index: 999;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+  padding: 16px;
+  transform: translateX(-100%);
+  transition: ${defaultTheme.default_transition};
+
+  &.show {
+    transform: translateX(0);
+  }
+
+  .sidebar-close-btn {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    &:hover {
+      color: ${defaultTheme.color_sea_green};
+    }
+  }
+
+  .sidenav-search-form {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin-top: 20px;
+
+    .input-group {
+      min-width: 100%;
+      column-gap: 0;
+    }
+  }
+
+  .sidenav-menu-list {
+    gap: 14px;
+    margin: 20px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+
+    li {
+      padding: 5px 5px 5px 12px;
+      border-radius: 4px;
+      transition: ${defaultTheme.default_transition};
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+
+        a {
+          span {
+            color: ${defaultTheme.color_sea_green};
+          }
+        }
+      }
+    }
+
+    a {
+      column-gap: 16px;
+      &.active {
+        color: ${defaultTheme.color_sea_green};
+      }
+    }
+  }
+
+  @media (max-width: ${breakpoints.xs}) {
+    width: 100%;
+  }
+`;
+
+const Sidebar = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const isSidebarOpen = useSelector(selectIsSidebarOpen)
+
+  return (
+    <SideNaviagationWrapper 
+      className={`bg-white h-full ${isSidebarOpen ? 'show' : ''}`}
+    >
+      <button 
+        className="sidebar-close-btn text-3xl text-outerspace"
+        onClick={() => dispatch(toggleSidebar())}>
+        <i class="bi bi-x-square"></i>
+      </button>
+      <div className="sidenav-head">
+        <SiteBrandWrapper to="/" classname="inline-flex">
+          <div className="brand-img-wrap flex items-center justify-center">
+            <img src={staticImages.logo} alt="site-brand-img" />
+            <span className="side-brand-text text-outerspace">CODE BUY</span>
+          </div>
+        </SiteBrandWrapper>
+        <form className="sidenav-search-form">
+          <InputGroupWrapper className="input-group">
+            <span className="input-icon flex items-center justify-center text-xl to-gray-50">
+              <i className="bi bi-search"></i>
+            </span>
+            <Input
+              type="text"
+              className="input-control w-full"
+              placeholder="Search"
+            />
+          </InputGroupWrapper>
+        </form>
+        <ul className="sidenav-menu-list grid">
+          {sideMenuData.map((menu) => (
+            <li key={menu.id}>
+              <Link
+                to={menu.menuLink}
+                className={` flex items-center text-gray 
+                      ${location.pathname === menu.menuLink ? "active" : ""}`}
+              >
+                <span className="text-xxl">
+                  <i className={`bi bi-${menu.iconName}`}></i>
+                </span>
+                <span className="text-lg font-medium">{menu.menuText}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </SideNaviagationWrapper>
+  );
+};
+
+export default Sidebar;

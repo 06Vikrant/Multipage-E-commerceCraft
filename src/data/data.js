@@ -1,4 +1,4 @@
-import { staticImages } from "../utils/images";
+import { staticImages } from "../utils/imgaes";
 
 const navMenuData = [
   {

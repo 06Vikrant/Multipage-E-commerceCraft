@@ -15,6 +15,12 @@ export const HeaderMainWrapper = styled.header`
             column-gap: 8px;
         }
     }
+
+    .sidebar-toggler {
+        font-size: 26px;
+        margin-right: 10px;
+        margin-bottom: -1px;
+    }
 `;
 
 export const SiteBrandWrapper = styled(Link)`

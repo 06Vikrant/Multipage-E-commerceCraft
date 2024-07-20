@@ -10,7 +10,11 @@ const BaseLayout = () => {
     <PageWrapper>
       <Header />
       <Sidebar />
-      <div>
+      <div
+      style={{
+        minHeight: 'calc(100vh - 545px',
+      }}
+      >
         <Outlet />
       </div>
       <Footer />
