@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthLayout, BaseLayout } from './components'
 
-import { ChangePass, CheckMail, Home, PageNotFound, ResetPass, SignIn, SignUp, Verification } from './pages'
+import { ChangePass, CheckMail, Home, PageNotFound, ProductDetails, ProductList, ResetPass, SignIn, SignUp, Verification } from './pages'
 import { GlobalStyles } from './styles/global/globalStyles'
 
 function App() {
@@ -13,6 +13,8 @@ function App() {
         {/* main screens */}
         <Route path='/' element={<BaseLayout />}>
           <Route index element={<Home />}/>
+          <Route path='/product' element={<ProductList />}/>
+          <Route path='/product/details' element={<ProductDetails />}/>
         </Route>
 
         {/* auth screen */}
